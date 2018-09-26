@@ -13,7 +13,7 @@ class Network {
             if(typeof city === 'string'){
                 call = await fetch(`https://api.openweathermap.org/data/2.5/forecast?q=${city}&APPID=cf29ec181705ab2b16b0972df4c16eab&units=metric`);
             }else {
-                call = await fetch(` https://api.openweathermap.org/data/2.5/forecast?lat=${city.lat}&lon=${city.lon}&appid=cf29ec181705ab2b16b0972df4c16eab`);
+                call = await fetch(` https://api.openweathermap.org/data/2.5/forecast?lat=${city.lat}&lon=${city.lon}&appid=cf29ec181705ab2b16b0972df4c16eab&units=metric`);
             }
 
             if (call && call.status === 200) {
@@ -139,7 +139,7 @@ class View {
      */
 
     box(data, index){
-        return  `<div class="info box" id=${index}> ${data}  More Info</div>`;
+        return  `<div class="info box" id=${index}> ${data}C  <br>More Info</div>`;
     }
 
     /**
@@ -199,7 +199,7 @@ class Weather extends View{
                 const box = this.createElement('div');
                 const dayName = this.getWeekName(w.dt_txt);
                 box.onclick = (e) => this.dayClick(e);
-                box.innerHTML= this.box(dayName, i);
+                box.innerHTML= this.box(dayName+ " " +parseInt(w.main.temp,10), i);
                 this.selector('.flex-container').appendChild(box);
             });
         }
@@ -217,7 +217,7 @@ class Weather extends View{
     getWeekName(date){
         const weekday = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
         const day = moment(date).day();
-        return `${weekday[day]}  ${moment(date).format('DD MM YYYY')}`
+        return `${weekday[day]}  ${moment(date).format('DD')}`
     }
 
     dayClick({ target },changeCity = false){
@@ -261,6 +261,7 @@ class Weather extends View{
             details.appendChild(item);
         }
     }
+
     cleanDetails(){
         const details = this.selector('.details');
         while (details.hasChildNodes()) {
