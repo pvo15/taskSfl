@@ -193,7 +193,6 @@ class Weather extends View{
                     return moment(value.dt_txt).format('HH') > 12;
                 })
                 .forEach((value) => {
-                console.log(moment(value).format('HH') > 12);
                 if (!filterByDays.find((i) => moment(i.dt_txt).format('MM DD') === moment(value.dt_txt).format('MM DD'))) {
                     filterByDays.push(value)
                 }
