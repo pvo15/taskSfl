@@ -50,8 +50,8 @@ class Network {
                 country: 'Yerevan'
             },
             {
-                city: 'Parise',
-                country: 'Parise'
+                city: 'Paris',
+                country: 'Paris'
             }
         ];
     }
@@ -188,7 +188,12 @@ class Weather extends View{
 
         const filterByDays = [];
         if (weather.list) {
-            weather.list.forEach((value) => {
+            weather.list
+                .filter((value)=>{
+                    return moment(value.dt_txt).format('HH') > 12;
+                })
+                .forEach((value) => {
+                console.log(moment(value).format('HH') > 12);
                 if (!filterByDays.find((i) => moment(i.dt_txt).format('MM DD') === moment(value.dt_txt).format('MM DD'))) {
                     filterByDays.push(value)
                 }
