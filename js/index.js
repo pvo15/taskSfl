@@ -245,11 +245,11 @@ class Weather extends View{
             a.setAttribute("class", "info box selected");
         }
 
-        this.details(this.weather);
+        this.details(this.weather, this.getWeekName(this.weather.dt_txt));
 
     }
 
-    details(data){
+    details(data, daysName){
         const { list, city } = data;
         const details = this.selector('.details');
         const selectedDaysInfo = list[this.selectedId];
@@ -257,7 +257,7 @@ class Weather extends View{
 
         if(this.selectedId !== null){
             const item = this.createElement('div');
-            item.innerHTML= this.detailItem({...selectedDaysInfo, City: city.name});
+            item.innerHTML= this.detailItem({...selectedDaysInfo, City: `${daysName} in  ${city.name}`});
             details.appendChild(item);
         }
     }
@@ -288,7 +288,6 @@ class Weather extends View{
         }
 
     }
-
 
 }
 
